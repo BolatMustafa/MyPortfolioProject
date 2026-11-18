@@ -1,6 +1,6 @@
 # 🚀 Dinamik Portfolyo & Yönetim Paneli (ASP.NET Core MVC)
 
-Bu proje, **ASP.NET Core MVC**, **Entity Framework Core** ve **MS SQL Server** teknolojileri kullanılarak geliştirilmiş; modüler vitrin (UI) yapısına ve kapsamlı bir yönetim paneline (**Admin Area**) sahip dinamik bir portfolyo web uygulamasıdır.
+MY Academy bunyesinde gerceklestirilen Bootcampte yapilan bu proje, **ASP.NET Core MVC**, **Entity Framework Core** ve **MS SQL Server** teknolojileri kullanılarak geliştirilmiş; modüler vitrin (UI) yapısına ve kapsamlı bir yönetim paneline (**Admin Area**) sahip dinamik bir portfolyo web uygulamasıdır.
 
 ---
 
