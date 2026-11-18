@@ -1,0 +1,31 @@
+﻿@model SocialMedia
+@{
+    ViewData["Title"] = "Yeni Sosyal Medya Hesabı";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="container-fluid py-3">
+    <div class="bg-white border rounded-4 p-4" style="max-width: 650px;">
+        <h4 class="mb-3 fw-semibold">Yeni Sosyal Medya Hesabı Ekle</h4>
+        <form method="post">
+            <div class="mb-3">
+                <label class="form-label">Platform Adı</label>
+                <input asp-for="Title" class="form-control" placeholder="Örn: GitHub, LinkedIn, Instagram" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Profil Bağlantısı (URL)</label>
+                <input asp-for="Url" class="form-control" placeholder="https://github.com" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Bootstrap İkon Class</label>
+                <input asp-for="IconUrl" class="form-control" placeholder="Örn: bi bi-github veya bi bi-linkedin" required />
+            </div>
+
+            <button type="submit" class="btn text-white px-4" style="background:#2f5d4e;">Kaydet</button>
+            <a href="/Admin/SocialMedia/SocialMediaList" class="btn btn-light border">Vazgeç</a>
+        </form>
+    </div>
+</div>
+

@@ -1,0 +1,43 @@
+﻿@model Experience
+@{
+    ViewData["Title"] = "Deneyim Güncelle";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="container-fluid py-3">
+    <div class="bg-white border rounded-4 p-4" style="max-width: 750px;">
+        <h4 class="mb-3 fw-semibold">Deneyim Bilgisini Güncelle</h4>
+        <form method="post">
+            <input type="hidden" asp-for="ExperienceId" />
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Pozisyon / Unvan</label>
+                    <input asp-for="Title" class="form-control" required />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Şirket / Kurum Adı</label>
+                    <input asp-for="CompanyName" class="form-control" required />
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Dönem / Kategori</label>
+                <input asp-for="Category" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Açıklama</label>
+                <textarea asp-for="Description" rows="4" class="form-control" required></textarea>
+            </div>
+
+            <div class="form-check form-switch mb-4">
+                <input asp-for="IsActive" class="form-check-input" role="switch" />
+                <label asp-for="IsActive" class="form-check-label">Aktif (Sitede Görünsün)</label>
+            </div>
+
+            <button type="submit" class="btn text-white px-4" style="background:#2f5d4e;">Değişiklikleri Kaydet</button>
+            <a href="/Admin/Experience/ExperienceList" class="btn btn-light border">Vazgeç</a>
+        </form>
+    </div>
+</div>

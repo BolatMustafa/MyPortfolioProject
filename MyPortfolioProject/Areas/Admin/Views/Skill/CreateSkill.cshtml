@@ -1,0 +1,28 @@
+﻿@model Skill
+@{
+    ViewData["Title"] = "Yeni Yetenek Kategorisi";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="container-fluid py-3">
+    <div class="bg-white border rounded-4 p-4" style="max-width: 700px;">
+        <h4 class="mb-3 fw-semibold">Yeni Yetenek Kategorisi Ekle</h4>
+        <form method="post">
+            <div class="mb-3">
+                <label class="form-label">Kategori Başlığı</label>
+                <input asp-for="Title" class="form-control" placeholder="Örn: Backend Geliştirme" required />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Bootstrap İkon Class</label>
+                <input asp-for="IconUrl" class="form-control" placeholder="Örn: bi bi-server" required />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Kısa Açıklama</label>
+                <textarea asp-for="Description" rows="3" class="form-control" required></textarea>
+            </div>
+            <button type="submit" class="btn text-white px-4" style="background:#2f5d4e;">Kaydet</button>
+            <a href="/Admin/Skill/SkillList" class="btn btn-light border">Vazgeç</a>
+        </form>
+    </div>
+</div>
+

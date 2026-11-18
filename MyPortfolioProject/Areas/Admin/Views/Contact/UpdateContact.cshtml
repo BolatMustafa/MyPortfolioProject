@@ -1,0 +1,44 @@
+﻿@model Contact
+@{
+    ViewData["Title"] = "İletişim Bilgisi Güncelle";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="container-fluid py-3">
+    <div class="bg-white border rounded-4 p-4" style="max-width: 750px;">
+        <h4 class="mb-3 fw-semibold">İletişim Bilgisini Güncelle</h4>
+        <form method="post">
+            <input type="hidden" asp-for="ContactId" />
+
+            <div class="mb-3">
+                <label class="form-label">Başlık</label>
+                <input asp-for="Title" class="form-control" required />
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">E-posta</label>
+                    <input type="email" asp-for="Email" class="form-control" required />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Telefon</label>
+                    <input type="tel" asp-for="PhoneNumber" class="form-control" required />
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Konum / Lokasyon</label>
+                <input asp-for="Location" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Açıklama</label>
+                <textarea asp-for="Description" rows="3" class="form-control" required></textarea>
+            </div>
+
+            <button type="submit" class="btn text-white px-4" style="background:#2f5d4e;">Güncelle</button>
+            <a href="/Admin/Contact/ContactList" class="btn btn-light border">Vazgeç</a>
+        </form>
+    </div>
+</div>
+

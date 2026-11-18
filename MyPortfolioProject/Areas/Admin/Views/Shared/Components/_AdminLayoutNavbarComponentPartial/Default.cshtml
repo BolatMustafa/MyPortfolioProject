@@ -1,0 +1,32 @@
+﻿<header class="admin-navbar">
+    <div class="navbar-left">
+        <button class="sidebar-toggle-btn" id="sidebarToggle" aria-label="Menüyü Aç/Kapat">
+            <i class="bi bi-list"></i>
+        </button>
+        <div class="breadcrumb-custom">
+            <a href="/Admin/Dashboard/Index"><i class="bi bi-house me-1"></i> Dashboard</a>
+            <span class="separator">/</span>
+            <span class="active-crumb">@(ViewData["Title"] ?? "Yönetim Paneli")</span>
+        </div>
+    </div>
+
+    <div class="navbar-right">
+        <!-- Search bar: Mesajlarda hızlı arama yapar -->
+        <form method="get" action="/Admin/Message/MessageList" class="nav-search-box m-0">
+            <i class="bi bi-search"></i>
+            <input type="text" name="search" placeholder="Mesajlarda ara..." id="navQuickSearch">
+        </form>
+
+        <!-- Quick Action Button: Doğrudan Yeni Proje Ekle sayfasına gider -->
+        <a href="/Admin/Project/CreateProject" class="btn-quick-add text-decoration-none">
+            <i class="bi bi-plus-lg"></i>
+            <span>Hızlı Ekle</span>
+        </a>
+
+        <!-- Admin Profile Pill: Dashboard'a gider -->
+        <a href="/Admin/Dashboard/Index" class="nav-profile-pill text-decoration-none text-dark" title="Yönetim Özeti">
+            <div class="nav-avatar-mini">AK</div>
+            <span class="d-none d-sm-inline" style="font-size:0.825rem; font-weight:600;">Admin</span>
+        </a>
+    </div>
+</header>

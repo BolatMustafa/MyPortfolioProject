@@ -1,0 +1,70 @@
+﻿<!-- SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    // Mobile Sidebar Toggle
+    const sidebar = document.getElementById('adminSidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+
+    if (sidebar && sidebarToggle) {
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('show-sidebar');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 991.98) {
+                if (!sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
+                    sidebar.classList.remove('show-sidebar');
+                }
+            }
+        });
+    }
+
+    // 1. MERKEZİ SİLME ONAYI (SweetAlert2)
+    function confirmDelete(event, url, itemName = "bu kaydı") {
+        event.preventDefault(); // Linkin hemen gitmesini engelle
+
+        Swal.fire({
+            title: 'Emin misiniz?',
+            text: `${itemName} kalıcı olarak silmek istediğinize emin misiniz? Bu işlem geri alınamaz!`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Evet, Sil!',
+            cancelButtonText: 'Vazgeç',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = url; // Onay verilirse silme adresine git
+            }
+        });
+    }
+
+    // 2. MERKEZİ KAYIT / GÜNCELLEME / HATA BİLDİRİMLERİ (TempData)
+    document.addEventListener("DOMContentLoaded", function() {
+        const successMessage = '@Html.Raw(TempData["SuccessMessage"])';
+        const errorMessage = '@Html.Raw(TempData["ErrorMessage"])';
+
+        if (successMessage && successMessage.trim() !== '') {
+            Swal.fire({
+                icon: 'success',
+                title: 'İşlem Başarılı!',
+                text: successMessage,
+                timer: 3000,
+                timerProgressBar: true,
+                showConfirmButton: false
+            });
+        }
+
+        if (errorMessage && errorMessage.trim() !== '') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Hata Oluştu!',
+                text: errorMessage,
+                confirmButtonText: 'Tamam',
+                confirmButtonColor: '#d33'
+            });
+        }
+    });
+</script>

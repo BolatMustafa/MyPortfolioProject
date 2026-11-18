@@ -1,0 +1,161 @@
+﻿@model List<Message>
+@{
+    ViewData["Title"] = "Gelen Kutusu";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="container-fluid py-3">
+    <div class="bg-white border rounded-4 p-4">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+            <div>
+                <h4 class="mb-0 fw-semibold">Gelen Kutusu</h4>
+                <small class="text-muted">
+                    Toplam <strong>@Model.Count</strong> mesaj •
+                    <span class="text-danger fw-semibold"><span id="pageUnreadCount">@Model.Count(x => !x.IsRead)</span> okunmamış</span>
+                </small>
+            </div>
+
+            <!-- Gönderen veya Konuya Göre Arama -->
+            <form method="get" action="/Admin/Message/MessageList" class="d-flex gap-2">
+                <input type="text" name="search" value="@ViewBag.Search" class="form-control" placeholder="Gönderen veya konu ara..." style="min-width: 240px;" />
+                <button type="submit" class="btn text-white" style="background:#2f5d4e;">Ara</button>
+                @if (!string.IsNullOrEmpty(ViewBag.Search as string))
+                {
+                    <a href="/Admin/Message/MessageList" class="btn btn-light border">Temizle</a>
+                }
+            </form>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Durum</th>
+                        <th>Gönderen</th>
+                        <th>Konu</th>
+                        <th>Tarih</th>
+                        <th class="text-end">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        var rowClass = item.IsRead ? "" : "table-warning fw-bold";
+                        <tr id="msg-row-@item.MessageId" class="@rowClass">
+                            <td id="msg-status-@item.MessageId">
+                                @if (item.IsRead)
+                                {
+                                    <span class="badge bg-secondary-subtle text-secondary border">Okundu</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">Okunmadı</span>
+                                }
+                            </td>
+                            <td>
+                                <div>@item.SenderName</div>
+                                <small class="text-muted fw-normal">@item.SenderEmail</small>
+                            </td>
+                            <td>@item.Subject</td>
+                            <td class="fw-normal">@item.SendDate.ToString("dd.MM.yyyy HH:mm")</td>
+                            <td class="text-end">
+                                <button type="button" class="btn btn-sm btn-primary" onclick="openMessageModal(@item.MessageId)">
+                                    Mesajı Oku
+                                </button>
+                                <a id="msg-toggle-@item.MessageId" href="/Admin/Message/ChangeReadStatus/@item.MessageId" class="btn btn-sm btn-outline-secondary">
+                                    @(item.IsRead ? "Okunmadı İşaretle" : "Okundu İşaretle")
+                                </a>
+                                <a href="/Admin/Message/DeleteMessage/@item.MessageId"
+                                   class="btn btn-sm btn-danger"
+                                   onclick="confirmDelete(event, this.href, '@item.SenderName kişisinden gelen mesajı')">
+                                    Sil
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Mesaj Detayı Bootstrap Modal -->
+<div class="modal fade" id="messageDetailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 border-0 shadow">
+            <div class="modal-header border-bottom">
+                <h5 class="modal-title fw-semibold" id="modalSubject">Mesaj Detayı</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-2">
+                    <small class="text-muted d-block">Gönderen</small>
+                    <strong id="modalSenderName"></strong> (<span id="modalSenderEmail" class="text-muted"></span>)
+                </div>
+                <div class="mb-3">
+                    <small class="text-muted d-block">Gönderim Tarihi</small>
+                    <span id="modalSendDate"></span>
+                </div>
+                <div class="p-3 bg-light rounded-3 border">
+                    <p id="modalMessageDetail" class="mb-0" style="white-space: pre-wrap;"></p>
+                </div>
+            </div>
+            <div class="modal-footer border-top">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openMessageModal(id) {
+        fetch('/Admin/Message/GetMessageDetail/' + id)
+            .then(function (response) { return response.json(); })
+            .then(function (data) {
+                document.getElementById('modalSubject').innerText = data.subject;
+                document.getElementById('modalSenderName').innerText = data.senderName;
+                document.getElementById('modalSenderEmail').innerText = data.senderEmail;
+                document.getElementById('modalSendDate').innerText = data.sendDate;
+                document.getElementById('modalMessageDetail').innerText = data.messageDetail;
+
+                var row = document.getElementById('msg-row-' + id);
+                if (row) {
+                    row.classList.remove('table-warning', 'fw-bold');
+                }
+
+                var statusCell = document.getElementById('msg-status-' + id);
+                if (statusCell) {
+                    statusCell.innerHTML = '<span class="badge bg-secondary-subtle text-secondary border">Okundu</span>';
+                }
+
+                var toggleBtn = document.getElementById('msg-toggle-' + id);
+                if (toggleBtn) {
+                    toggleBtn.innerText = 'Okunmadı İşaretle';
+                }
+
+                if (data.unreadCount !== undefined) {
+                    var pageCounter = document.getElementById('pageUnreadCount');
+                    if (pageCounter) {
+                        pageCounter.innerText = data.unreadCount;
+                    }
+
+                    var sidebarBadge = document.getElementById('sidebarUnreadBadge');
+                    if (sidebarBadge) {
+                        if (data.unreadCount > 0) {
+                            sidebarBadge.innerText = data.unreadCount;
+                            sidebarBadge.style.display = 'inline-block';
+                        } else {
+                            sidebarBadge.style.display = 'none';
+                        }
+                    }
+                }
+
+                var modalEl = document.getElementById('messageDetailModal');
+                if (modalEl) {
+                    var modal = new bootstrap.Modal(modalEl);
+                    modal.show();
+                }
+            });
+    }
+</script>
+

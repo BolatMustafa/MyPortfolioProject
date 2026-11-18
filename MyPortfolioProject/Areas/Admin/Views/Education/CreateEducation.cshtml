@@ -1,0 +1,37 @@
+﻿@model Education
+@{
+    ViewData["Title"] = "Yeni Eğitim Ekle";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="container-fluid py-3">
+    <div class="bg-white border rounded-4 p-4" style="max-width: 750px;">
+        <h4 class="mb-3 fw-semibold">Yeni Eğitim Bilgisi Ekle</h4>
+        <form method="post">
+            <div class="mb-3">
+                <label class="form-label">Bölüm / Derece Başlığı</label>
+                <input asp-for="Title" class="form-control" placeholder="Örn: Lisans — Bilgisayar Mühendisliği" required />
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Okul / Kurum Adı</label>
+                    <input asp-for="SchoolName" class="form-control" placeholder="Örn: Anadolu Üniversitesi" required />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Dönem veya Rozet</label>
+                    <input asp-for="PeriodOrBadge" class="form-control" placeholder="Örn: 2020 - 2024 veya Mezuniyet" required />
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Açıklama</label>
+                <textarea asp-for="Description" rows="3" class="form-control" placeholder="Bölüm veya çalışmalar hakkında kısa açıklama..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn text-white px-4" style="background:#2f5d4e;">Kaydet</button>
+            <a href="/Admin/Education/EducationList" class="btn btn-light border">Vazgeç</a>
+        </form>
+    </div>
+</div>
+

@@ -1,0 +1,100 @@
+﻿@model List<Project>
+@{
+    ViewData["Title"] = "Projelerim Listesi";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+    string currentSort = ViewBag.CurrentSort ?? "newest";
+}
+
+<div class="container-fluid py-3">
+    <div class="bg-white border rounded-4 p-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h4 class="mb-0 fw-semibold">Projelerim Listesi</h4>
+                <small class="text-muted">Portfolyo sitenizde sergilenecek projeleri, teknolojileri ve kategorilerini yönetin.</small>
+            </div>
+            <div class="d-flex gap-2">
+                <a href="/Admin/Category/CategoryList" class="btn btn-outline-secondary rounded-3">Kategoriler</a>
+                <a href="/Admin/Project/CreateProject" class="btn text-white rounded-3" style="background:#2f5d4e;">+ Yeni Proje Ekle</a>
+            </div>
+        </div>
+
+        <!-- Filtreleme ve Sıralama Çubuğu -->
+        <form method="get" action="/Admin/Project/ProjectList" class="row g-2 align-items-end mb-4 p-3 bg-light rounded-3 border">
+            <div class="col-md-4">
+                <label class="form-label small fw-medium text-muted mb-1">Kategoriye Göre Filtrele</label>
+                <select name="categoryId" asp-items="ViewBag.Categories" class="form-select form-select-sm" onchange="this.form.submit()">
+                    <option value="">Tüm Kategoriler</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label small fw-medium text-muted mb-1">Sıralama Ölçütü</label>
+                <select name="sortOrder" class="form-select form-select-sm" onchange="this.form.submit()">
+                    <option value="newest" selected="@(currentSort == "newest")">En Yeni Proje (Varsayılan)</option>
+                    <option value="oldest" selected="@(currentSort == "oldest")">En Eski Proje</option>
+                    <option value="title_asc" selected="@(currentSort == "title_asc")">Proje Adı (A - Z)</option>
+                    <option value="title_desc" selected="@(currentSort == "title_desc")">Proje Adı (Z - A)</option>
+                </select>
+            </div>
+            <div class="col-md-4 d-flex gap-2">
+                <button type="submit" class="btn btn-sm text-white px-3" style="background:#2f5d4e;">Uygula</button>
+                <a href="/Admin/Project/ProjectList" class="btn btn-sm btn-outline-secondary">Sıfırla</a>
+            </div>
+        </form>
+
+        @if (!Model.Any())
+        {
+            <div class="alert alert-light border text-center py-4 text-muted">
+                Seçilen filtreye uygun proje bulunamadı.
+            </div>
+        }
+        else
+        {
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>#</th>
+                        <th>Görsel</th>
+                        <th>Proje Adı</th>
+                        <th>Kategori</th>
+                        <th>Teknolojiler</th>
+                        <th>Durum</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.ProjectId</td>
+                            <td>
+                                <img src="@item.ImageUrl" alt="@item.ProjectTitle" class="rounded-3 border" style="width: 64px; height: 48px; object-fit: cover;" />
+                            </td>
+                            <td>
+                                <div class="fw-medium">@item.ProjectTitle</div>
+                                <small class="text-muted">@item.Description</small>
+                            </td>
+                            <td><span class="badge bg-light text-dark border">@item.Category?.CategoryName</span></td>
+                            <td><small class="text-muted">@item.Technologies</small></td>
+                            <td>
+                                @if (item.IsActive)
+                                {
+                                    <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">Aktif</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle px-2 py-1">Pasif</span>
+                                }
+                            </td>
+                            <td>
+                                <a href="/Admin/Project/UpdateProject/@item.ProjectId" class="btn btn-sm btn-success">Güncelle</a>
+                                <a href="/Admin/Project/DeleteProject/@item.ProjectId"
+                                   class="btn btn-sm btn-danger"
+                                   onclick="confirmDelete(event, this.href, '@item.ProjectTitle projesini')">Sil</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>

@@ -1,0 +1,65 @@
+﻿@model Project
+@{
+    ViewData["Title"] = "Proje Güncelle";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="container-fluid py-3">
+    <div class="bg-white border rounded-4 p-4" style="max-width: 750px;">
+        <h4 class="mb-3 fw-semibold">Proje Bilgisini Güncelle</h4>
+        <form method="post" enctype="multipart/form-data" novalidate>
+            <input type="hidden" asp-for="ProjectId" />
+            <input type="hidden" asp-for="ImageUrl" />
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Proje Adı</label>
+                    <input asp-for="ProjectTitle" class="form-control" />
+                    <span asp-validation-for="ProjectTitle" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Kategori</label>
+                    <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-select"></select>
+                    <span asp-validation-for="CategoryId" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Yeni Görsel Yükle (İsteğe Bağlı - Maks 2 MB)</label>
+                    <input type="file" asp-for="ImageFile" accept=".jpg,.jpeg,.png,.webp" class="form-control" />
+                    <span asp-validation-for="ImageFile" class="text-danger small"></span>
+                    @if (!string.IsNullOrEmpty(Model?.ImageUrl))
+                    {
+                        <div class="mt-2">
+                            <small class="text-muted d-block mb-1">Mevcut Görsel:</small>
+                            <img src="@Model.ImageUrl" alt="Mevcut Görsel" class="rounded-3 border" style="height: 60px; object-fit: cover;" />
+                        </div>
+                    }
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Kullanılan Teknolojiler</label>
+                    <input asp-for="Technologies" class="form-control" />
+                    <span asp-validation-for="Technologies" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Proje Açıklaması</label>
+                <textarea asp-for="Description" rows="4" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-4">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" asp-for="IsActive" id="isActiveSwitch" />
+                    <label class="form-check-label fw-medium" for="isActiveSwitch">Projeyi Yayına Al (Aktif)</label>
+                </div>
+                <small class="text-muted">Pasif olarak işaretlenen projeler sadece admin panelinde görünür, vitrinde listelenmez.</small>
+            </div>
+
+            <button type="submit" class="btn text-white px-4" style="background:#2f5d4e;">Güncelle</button>
+            <a href="/Admin/Project/ProjectList" class="btn btn-light border">Vazgeç</a>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+﻿@model Category
+@{
+    ViewData["Title"] = "Kategori Güncelle";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="container-fluid py-3">
+    <div class="bg-white border rounded-4 p-4" style="max-width: 600px;">
+        <h4 class="mb-3 fw-semibold">Proje Kategorisini Güncelle</h4>
+        <form method="post">
+            <input type="hidden" asp-for="CategoryId" />
+
+            <div class="mb-3">
+                <label class="form-label">Kategori Adı</label>
+                <input asp-for="CategoryName" class="form-control" />
+            </div>
+
+            <button type="submit" class="btn text-white px-4" style="background:#2f5d4e;">Güncelle</button>
+            <a href="/Admin/Category/CategoryList" class="btn btn-light border">Vazgeç</a>
+        </form>
+    </div>
+</div>
+

@@ -1,0 +1,185 @@
+﻿@model About
+@{
+    ViewData["Title"] = "Hakkımda Yönetimi";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<style>
+    .um {
+        --g: #2f5d4e;
+        --g-soft: #e7efe9;
+        --line: #ebe8e1;
+    }
+
+    .um-card {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 1.75rem;
+        height: 100%;
+    }
+
+    .um-head {
+        display: flex;
+        align-items: center;
+        gap: .9rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .um-icon {
+        width: 46px;
+        height: 46px;
+        border-radius: 12px;
+        background: var(--g-soft);
+        color: var(--g);
+        display: grid;
+        place-items: center;
+        font-size: 1.3rem;
+    }
+
+    .um-head h4 {
+        margin: 0;
+        font-weight: 600;
+    }
+
+    .um-head small {
+        color: #8a8a85;
+    }
+
+    .um .form-label {
+        font-size: .85rem;
+        font-weight: 500;
+        color: #6b6b66;
+        margin-bottom: .4rem;
+    }
+
+    .um .form-control {
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: .7rem .9rem;
+        background: #fcfbf9;
+    }
+
+        .um .form-control:focus {
+            border-color: var(--g);
+            background: #fff;
+            box-shadow: 0 0 0 .2rem rgba(47,93,78,.12);
+        }
+
+    .um-title {
+        font-size: .75rem;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        color: #9a9a94;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+
+    .um-btn {
+        background: var(--g);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        padding: .75rem;
+        font-weight: 500;
+    }
+
+        .um-btn:hover {
+            background: #244a3e;
+            color: #fff;
+        }
+</style>
+
+<div class="um container-fluid py-3">
+    <form method="post">
+        <input type="hidden" asp-for="AboutId" />
+        <div class="row g-4">
+            <!-- Sol: Metin ve Açıklamalar -->
+            <div class="col-xl-8 col-lg-7">
+                <div class="um-card">
+                    <div class="um-head">
+                        <div class="um-icon"><i class="bi bi-person-badge"></i></div>
+                        <div>
+                            <h4>Hakkımda Bilgilerini Güncelle</h4>
+                            <small>Biyografi, unvan ve öne çıkan istatistik alanlarını düzenleyin.</small>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="FullNameLocation" class="form-label">Ad Soyad & Şehir</label>
+                            <input asp-for="FullNameLocation" class="form-control" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Title" class="form-label">Unvan Rozeti</label>
+                            <input asp-for="Title" class="form-control" required />
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Heading" class="form-label">Bölüm Başlığı</label>
+                        <input asp-for="Heading" class="form-control" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Description1" class="form-label">1. Paragraf (Giriş)</label>
+                        <textarea asp-for="Description1" rows="3" class="form-control" required></textarea>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Description2" class="form-label">2. Paragraf (Detay)</label>
+                        <textarea asp-for="Description2" rows="3" class="form-control" required></textarea>
+                    </div>
+
+                    <div class="um-title">Öne Çıkan İstatistikler (3 Kart)</div>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label">1. Sayı / Etiket</label>
+                            <input asp-for="Stat1Number" class="form-control mb-2" placeholder="10+" required />
+                            <input asp-for="Stat1Title" class="form-control" placeholder="Yıl Deneyim" required />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">2. Sayı / Etiket</label>
+                            <input asp-for="Stat2Number" class="form-control mb-2" placeholder="25+" required />
+                            <input asp-for="Stat2Title" class="form-control" placeholder="Eğitim İçeriği" required />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">3. Sayı / Etiket</label>
+                            <input asp-for="Stat3Number" class="form-control mb-2" placeholder="200K+" required />
+                            <input asp-for="Stat3Title" class="form-control" placeholder="Öğrenci" required />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sağ: Fotoğraf ve CV -->
+            <div class="col-xl-4 col-lg-5">
+                <div class="um-card d-flex flex-column">
+                    <div class="um-title">Medya ve Dosya</div>
+
+                    <div class="mb-3">
+                        <label asp-for="ImageUrl" class="form-label">Hakkımda Fotoğraf URL</label>
+                        <input asp-for="ImageUrl" class="form-control" required />
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                    {
+                        <div class="text-center my-2">
+                            <img src="@Model.ImageUrl" alt="Profil" class="img-fluid rounded-3 border" style="max-height: 220px; object-fit: cover;" />
+                        </div>
+                    }
+
+                    <div class="mb-3 mt-2">
+                        <label asp-for="CvUrl" class="form-label">Özgeçmiş (CV) Linki</label>
+                        <input asp-for="CvUrl" class="form-control" required />
+                    </div>
+
+                    <div class="mt-auto pt-4 d-grid">
+                        <button type="submit" class="um-btn">Değişiklikleri Kaydet</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
