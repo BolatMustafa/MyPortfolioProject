@@ -20,10 +20,12 @@ Uygulama iki ana katmandan oluşmaktadır:
 * **Frontend:** HTML5, CSS3, Bootstrap 5, JavaScript (Fetch API / AJAX), Bootstrap Icons
 * **Kullanıcı Deneyimi & Bildirimler:** SweetAlert2 (Merkezi onay ve durum bildirimleri), Bootstrap Modal
 * **Doğrulama & Dosya Yönetimi:** Data Annotations (`[Required]`, `[EmailAddress]`, `[StringLength]`, `[NotMapped]`), `IFormFile` ile sunucuya görsel yükleme
+<img width="1912" height="966" alt="3" src="https://github.com/user-attachments/assets/e02fa157-1681-47b2-afb8-e0191e319290" />
 
 ---
 
 ## ✨ Öne Çıkan Modüller ve Özellikler
+<img width="1912" height="984" alt="4" src="https://github.com/user-attachments/assets/e087bbe0-3aae-4481-aed3-5a14090bbd0e" />
 
 ### 📊 1. Yönetim Özeti (Dashboard)
 * **Tip Güvenli Mimari:** Farklı entity verilerini tek ekranda toplamak için oluşturulan `DashboardViewModel`.
@@ -36,17 +38,22 @@ Uygulama iki ana katmandan oluşmaktadır:
 * **Aktif / Pasif Durum Kontrolü:** `IsActive` alanı ile pasif projelerin admin panelinde tutulup vitrinde gizlenmesi.
 * **Görsel Yükleme:** `IFormFile` ile proje görsellerinin güvenli şekilde sunucuya (`wwwroot`) yüklenmesi.
 * **Filtreleme ve Sıralama:** Hem admin panelinde hem de UI vitrininde kategori bazlı filtreleme ve en yeniden eskiye sıralama.
+<img width="1912" height="984" alt="5" src="https://github.com/user-attachments/assets/8664d595-3c33-4a2a-90aa-8b77766074fb" />
+<img width="1912" height="993" alt="6" src="https://github.com/user-attachments/assets/f3520a08-c041-4a32-945a-852e7c243911" />
 
 ### 📩 3. Gelişmiş Gelen Kutusu (Mesaj Yönetimi)
 * **İki Katmanlı Doğrulama:** İletişim formundan gönderilen verilerin hem istemci hem sunucu tarafında Data Annotations ile doğrulanıp kaydedilmesi.
 * **AJAX & Bootstrap Modal:** Sayfa yenilenmeden mesaj detayının modal pencerede açılması ve otomatik **"Okundu"** olarak işaretlenmesi.
 * **Görsel Ayrım & Canlı Sayaç:** Okunmamış mesajların tabloda vurgulanması, gönderen/konuya göre arama ve sol menüde canlı okunmamış mesaj rozeti.
+<img width="1912" height="993" alt="7" src="https://github.com/user-attachments/assets/e30552a9-6c4c-4f99-815f-1cab5126bc20" />
 
 ### 🔔 4. Kullanıcı Deneyimi (UX) İyileştirmeleri
 * Tüm silme işlemlerinde **SweetAlert2** onay pencereleri.
 * Ekleme, güncelleme, durum değiştirme ve hata senaryolarında `TempData` tabanlı merkezi bildirim sistemi.
+<img width="1912" height="993" alt="8" src="https://github.com/user-attachments/assets/d7aac2b8-2871-44f6-8f2e-9f82c63ce2ae" />
 
 ---
+<img width="1912" height="993" alt="9" src="https://github.com/user-attachments/assets/a9f5aa9f-82b4-46db-96cf-7df7e6d4f8d9" />
 
 ## ⚙️ Kurulum ve Çalıştırma
 
